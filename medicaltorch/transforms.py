@@ -217,11 +217,13 @@ class RandomRotation(MTTransform):
     def __call__(self, sample):
         rdict = {}
         input_data = sample['input']
+        input_metadata = sample['input_metadata']
         angle = self.get_params(self.degrees)
         input_data = F.rotate(input_data, angle,
                               self.resample, self.expand,
                               self.center)
         rdict['input'] = input_data
+        input_metadata['__rotation'] = angle
 
         if self.labeled:
             gt_data = sample['gt']
